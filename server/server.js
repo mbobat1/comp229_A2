@@ -9,7 +9,7 @@ dotenv.config();
 const PORT = process.env.PORT || 7000;
 const MONGOURL = process.env.MONGODB_URI;
 
-// Connect to MongoDB using Mongoose
+// Connect to MongoDB using Mongoose.
 mongoose
  .connect(MONGOURL, {
   useNewUrlParser: true,

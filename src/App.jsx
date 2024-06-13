@@ -7,7 +7,7 @@ function App() {
     fetch("/api")
       .then(response => response.json())
       .then(data => setBackendData(data))
-      .catch(error => console.error('Error fetching data:', error));
+      .catch(error => console.error('error fetching data:', error));
   }, []);
 
   return (
