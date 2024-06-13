@@ -1,24 +1,31 @@
-import config from "./config/config.js";
 import mongoose from "mongoose";
-import router from "./routes/api.route.js";
+import dotenv from "dotenv";
 import app from "./express.js";
+import productRoutes from "./routes/productRoutes.js";
 
-mongoose.Promise = global.Promise;
-mongoose.connect(config.mongoUri, {
- useNewUrlParser: true,
- useUnifiedTopology: true,
-});
-mongoose.connection.on("error", (e) => {
- throw new Error(`unable to connect to database: ${config.mongoUri}`);
-});
+// Load environment variables
+dotenv.config();
 
-const port = 3000;
+const PORT = process.env.PORT || 7000;
+const MONGOURL = process.env.MONGODB_URI;
 
-app.use("/", router);
+// Connect to MongoDB using Mongoose
+mongoose
+ .connect(MONGOURL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+ })
+ .then(() => {
+  console.log("Database is connected successfully.");
+  app.listen(PORT, () => {
+   console.log(`Server is running on port ${PORT}`);
+  });
+ })
+ .catch((error) => console.log("MongoDB connection error:", error));
+
+// Use routes
+app.use("/api/products", productRoutes);
+
 app.get("/api", (req, res) => {
  res.json({ users: ["user1", "user2", "user3", "user4"] });
-});
-
-app.listen(port, () => {
- console.log(`Server is running on port ${port}`);
 });
