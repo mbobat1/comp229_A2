@@ -16,8 +16,4 @@ app.use(compress());
 app.use(helmet());
 app.use(cors());
 
-app.get("/", (req, res) => {
- res.json({ message: "Welcome to Maaz's Dressstore application." });
-});
-
 export default app;
